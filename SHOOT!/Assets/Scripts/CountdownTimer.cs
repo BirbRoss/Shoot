@@ -9,7 +9,7 @@ public class CountdownTimer : MonoBehaviour
 
     public float TimeLeft = 3.0f;
     public bool TimerOn = false;
-    TextMeshProUGUI TimerTxt;
+    public TextMeshProUGUI TimerTxt;
 
     public PlayerShoot shootScript;
 
@@ -18,7 +18,6 @@ public class CountdownTimer : MonoBehaviour
     {
         //Disable later this is just for testing
         TimerOn = true;
-        TimerTxt = gameObject.GetComponent<TextMeshProUGUI>();
         shootScript.enabled = false;
     }
 
@@ -34,11 +33,10 @@ public class CountdownTimer : MonoBehaviour
             }
             else
             {
-                Debug.Log("Times up");
+                TimerOn = false;
                 TimeLeft = 0;
                 shootScript.enabled = true;
                 TimerTxt.text = "DRAW!";
-                TimerOn = false;
             }
         }
     }
@@ -46,6 +44,6 @@ public class CountdownTimer : MonoBehaviour
     void updateTimer(float currentTime)
     {
         currentTime += 1;
-        TimerTxt.text = currentTime.ToString("0.00");
+        TimerTxt.text = currentTime.ToString("0");
     }
 }
