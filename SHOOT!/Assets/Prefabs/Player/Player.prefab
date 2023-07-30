@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1059456208908605976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5173190801570348365}
+  - component: {fileID: 6025537844641551064}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5173190801570348365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059456208908605976}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.0000006165818, z: -8.881784e-15, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -3.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6025537844641551064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059456208908605976}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca43896ff48ab64fb9e96ac9c0bf6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  animSpeed: 2
+  Firerate: 0.25
+  LastShot: 0
+  ShootingSystem: {fileID: 6351868999773675239, guid: ab433759b46eb85448fc2ae459adca3f,
+    type: 3}
+  ImpactParticleSystem: {fileID: 2235857112097177155, guid: e5976c4c00a0a714eaa1d931e96ae453,
+    type: 3}
+  BulletTrail: {fileID: 5794001501173446794, guid: ce60f1bc9be5c0b4f96890fd950b4cd7,
+    type: 3}
+  BulletSpawnPoint: {fileID: 0}
+  bulletForce: 250
+  BulletSpeed: 100

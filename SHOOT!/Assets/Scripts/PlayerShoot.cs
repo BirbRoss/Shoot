@@ -20,6 +20,7 @@ public class PlayerShoot : MonoBehaviour
     public Transform BulletSpawnPoint;
     public float bulletForce = 50f;
     public float BulletSpeed = 100;
+    public float humanMultiplier = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -57,11 +58,32 @@ public class PlayerShoot : MonoBehaviour
 
                 if (hit.rigidbody != null)
                 {
-                    hit.rigidbody.AddForceAtPosition(ray.direction * bulletForce, hit.point);
-                    hit.transform.gameObject.SendMessage("RemoveOne");
+                    if (hit.transform.root.GetChild(0).GetComponent<controlRagdoll>() != null)
+                    {
+                        //Disables animator so it does't break the rigidbody
+                        hit.transform.root.GetChild(0).gameObject.GetComponent<Animator>().enabled = false;
+
+                        //Disables loser timer on that bandit
+                        hit.transform.root.GetChild(0).gameObject.GetComponent<banditShoot>().enabled = false;
+
+                        //Enabled ragdoll and adds force
+                        hit.transform.root.GetChild(0).SendMessage("setRigidBodiesKinematic", false);
+                        hit.rigidbody.AddForceAtPosition(ray.direction * bulletForce * humanMultiplier, hit.point);
+
+                        //Sends a message to the root object (highest parent object) to remove one off the score
+                        hit.transform.root.GetChild(0).gameObject.SendMessage("RemoveOne");
+                    }
+                    else
+                    {
+                        hit.rigidbody.AddForceAtPosition(ray.direction * bulletForce, hit.point);
+                    }
                 }
                 
-                hit.transform.GetComponent<Renderer>().material.color = Color.red;
+                if (hit.transform.GetComponent<Renderer>() != null)
+                {
+                    hit.transform.GetComponent<Renderer>().material.color = Color.red;
+                }
+                
 
                 LastShot = Time.time;
             }

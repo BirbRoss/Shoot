@@ -13,6 +13,8 @@ public class LevelManager : MonoBehaviour
 
     public CountdownTimer Timer;
     public PlayerShoot shootScript;
+    public bool gameOver = false;
+    public Animator gameOverTxt;
 
     private void Start()
     {
@@ -23,12 +25,9 @@ public class LevelManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    //Checks if any targets are left
-    //Should make it so when time.time exceeds a limit the player loses?
-    //Or maybe have that as per enemy so faster enemies will trigger a game over
     void Update()
     {
-        if (GoalCount <= 0)
+        if (GoalCount <= 0 && !gameOver)
         {
             if (!moveOnText.IsActive())
             {
@@ -37,6 +36,15 @@ public class LevelManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 LoadNext();
+            }
+
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && gameOver)
+            {
+                Debug.Log("doing thing");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }
@@ -58,5 +66,14 @@ public class LevelManager : MonoBehaviour
     void StartTimer()
     {
         Timer.enabled = true;
+    }
+
+    public void killPlayer()
+    {
+        //play sound
+        shootScript.enabled = false;
+        transition.SetTrigger("Start");
+        gameOverTxt.SetTrigger("Start");
+        gameOver = true;
     }
 }
