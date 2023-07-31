@@ -3,7 +3,27 @@ guid: 6cfe529d539e97145b640266a95e85bb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TnT barrel
+    second: {fileID: 2100000, guid: a3d40131dc49db44184db4b35b977b72, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TnT text
+    second: {fileID: 2100000, guid: cb5465a965b4bff469bc39e88f367041, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tnt Barrel ring
+    second: {fileID: 2100000, guid: 3794014f822fa8e4780e4ef23427e3a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tnt sign
+    second: {fileID: 2100000, guid: 9e35c22ea322efe408052fede69011f9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

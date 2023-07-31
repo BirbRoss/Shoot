@@ -1,4 +1,10 @@
 # =============== #
+# Manually ignored folders #
+# =============== #
+Builds/
+
+
+# =============== #
 # Unity generated #
 # =============== #
 Temp/

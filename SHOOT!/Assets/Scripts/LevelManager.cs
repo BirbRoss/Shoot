@@ -18,8 +18,12 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        shootScript.enabled = false;
-        Timer.enabled = false;
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            shootScript.enabled = false;
+            Timer.enabled = false;
+        }
+
         Invoke("StartTimer", transitionTime);
 
     }
@@ -39,13 +43,24 @@ public class LevelManager : MonoBehaviour
             }
 
         }
+        else if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                LoadNext();
+            }
+        }
         else
         {
             if (Input.GetKeyDown(KeyCode.Space) && gameOver)
             {
-                Debug.Log("doing thing");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
@@ -60,7 +75,16 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(transitionTime);
 
-        SceneManager.LoadScene(levelIndex);
+        if (levelIndex == 6)
+        {
+            Destroy(FindObjectOfType<musicHaunter>().gameObject);
+            SceneManager.LoadScene(0);    
+        }
+        else
+        {
+            SceneManager.LoadScene(levelIndex);
+        }
+        
     }
 
     void StartTimer()
@@ -71,6 +95,12 @@ public class LevelManager : MonoBehaviour
     public void killPlayer()
     {
         //play sound
+
+        if (!gameOver)
+        {
+            gameObject.GetComponent<AudioSource>().PlayOneShot(gameObject.GetComponent<AudioSource>().clip);
+        }
+
         shootScript.enabled = false;
         transition.SetTrigger("Start");
         gameOverTxt.SetTrigger("Start");

@@ -7,6 +7,7 @@ public class PlayerShoot : MonoBehaviour
 
     Camera cam;
     LayerMask mask;
+    LayerMask barrelMask;
     public Animator anim;
     public float animSpeed;
 
@@ -27,6 +28,7 @@ public class PlayerShoot : MonoBehaviour
     {
         cam = Camera.main;
         mask = LayerMask.GetMask("Target");
+        barrelMask = LayerMask.GetMask("Barrel");
         anim.speed = animSpeed;
     }
 
@@ -43,6 +45,7 @@ public class PlayerShoot : MonoBehaviour
 
             ShootingSystem.Play();
             anim.Play("ShootGun");
+            anim.gameObject.GetComponent<AudioSource>().PlayOneShot(anim.gameObject.GetComponent<AudioSource>().clip);
 
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -58,7 +61,7 @@ public class PlayerShoot : MonoBehaviour
 
                 if (hit.rigidbody != null)
                 {
-                    if (hit.transform.root.GetChild(0).GetComponent<controlRagdoll>() != null)
+                    if (hit.transform.root.GetChild(0).GetComponent<controlRagdoll>() != null) //hits bandit
                     {
                         //Disables animator so it does't break the rigidbody
                         hit.transform.root.GetChild(0).gameObject.GetComponent<Animator>().enabled = false;
@@ -73,12 +76,13 @@ public class PlayerShoot : MonoBehaviour
                         //Sends a message to the root object (highest parent object) to remove one off the score
                         hit.transform.root.GetChild(0).gameObject.SendMessage("RemoveOne");
                     }
-                    else
+                    else //hits target
                     {
                         hit.rigidbody.AddForceAtPosition(ray.direction * bulletForce, hit.point);
+                        hit.transform.gameObject.SendMessage("RemoveOne");
                     }
                 }
-                
+
                 if (hit.transform.GetComponent<Renderer>() != null)
                 {
                     hit.transform.GetComponent<Renderer>().material.color = Color.red;
@@ -86,6 +90,14 @@ public class PlayerShoot : MonoBehaviour
                 
 
                 LastShot = Time.time;
+            }
+            else if (Physics.Raycast(ray, out hit, 30, barrelMask))
+            {
+                TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(trail, BulletSpawnPoint.position + ray.direction * 30, Vector3.zero, false));
+                LastShot = Time.time;
+
+                hit.transform.gameObject.SendMessage("explode");
             }
             else
             {
