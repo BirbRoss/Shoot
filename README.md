@@ -1,4 +1,4 @@
-# Shoot
+# Rootin' Tootin' n' Shootin'
 Icojam 2023 submission for the theme "3... 2... 1..."
 
 ## Story
